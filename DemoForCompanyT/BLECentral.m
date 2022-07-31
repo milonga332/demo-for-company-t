@@ -89,9 +89,19 @@ NSString* const CharacteristicUUID = @"7691b78a-9015-4367-9b95-fc631c412cc6";
 
     for (CBCharacteristic* characteristic in service.characteristics) {
         if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:CharacteristicUUID]]) {
-            [_delegate updateBLEStatus:[NSString stringWithFormat:@"battery: %@", characteristic.value]];
+            [peripheral readValueForCharacteristic:characteristic];
         }
     }
+}
+
+- (void)peripheral:(CBPeripheral*)peripheral didUpdateValueForCharacteristic:(CBCharacteristic*)characteristic error:(NSError*)error
+{
+    if (error) {
+        [_delegate updateBLEStatus:[NSString stringWithFormat:@"error: %@", error]];
+        return;
+    }
+    
+    [_delegate updateBLEStatus:[NSString stringWithFormat:@"battery: %@", characteristic.value]];
 }
 
 - (void)centralManager:(CBCentralManager*)central didFailToConnectPeripheral:(CBPeripheral*)peripheral error:(NSError*)error
