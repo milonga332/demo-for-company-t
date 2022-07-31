@@ -90,6 +90,7 @@ NSString* const CharacteristicUUID = @"7691b78a-9015-4367-9b95-fc631c412cc6";
     for (CBCharacteristic* characteristic in service.characteristics) {
         if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:CharacteristicUUID]]) {
             [peripheral readValueForCharacteristic:characteristic];
+            [_delegate updateBLEStatus:@"reading value"];
         }
     }
 }
