@@ -23,9 +23,7 @@ NSString* const CharacteristicUUID = @"7691b78a-9015-4367-9b95-fc631c412cc6";
     return self;
 }
 
-#pragma mark - CBCentralManagerDelegate
-
-- (void)centralManagerDidUpdateState:(CBCentralManager*)central
+- (void)start
 {
     if(CBManager.authorization != CBManagerAuthorizationAllowedAlways){
         [_delegate updateBLEStatus:@"invalid authorization"];
@@ -38,6 +36,7 @@ NSString* const CharacteristicUUID = @"7691b78a-9015-4367-9b95-fc631c412cc6";
     }
     
     if(_isStarted){
+        [_delegate updateBLEStatus:@"already started"];
         return;
     }
     
@@ -47,6 +46,13 @@ NSString* const CharacteristicUUID = @"7691b78a-9015-4367-9b95-fc631c412cc6";
                                          }];
     _isStarted = YES;
     [_delegate updateBLEStatus:@"scanning"];
+}
+
+#pragma mark - CBCentralManagerDelegate
+
+- (void)centralManagerDidUpdateState:(CBCentralManager*)central
+{
+
 }
 
 - (void)centralManager:(CBCentralManager*)central didDiscoverPeripheral:(CBPeripheral*)peripheral advertisementData:(NSDictionary*)advertisementData RSSI:(NSNumber*)RSSI

@@ -25,4 +25,8 @@
     });
 }
 
+- (IBAction)startDidTapped:(id)sender {
+    [_central start];
+}
+
 @end

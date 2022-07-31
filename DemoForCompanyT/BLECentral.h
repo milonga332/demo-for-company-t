@@ -13,5 +13,6 @@
  */
 @interface BLECentral : NSObject
 - (id)initWithDelegate:(id<BLECentralDelegate>)delegate;
+- (void)start;
 @end
 
